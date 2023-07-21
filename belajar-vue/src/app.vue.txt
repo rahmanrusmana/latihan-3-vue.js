@@ -1,0 +1,100 @@
+<script setup>
+import {ref} from 'vue'
+
+
+const titleClass = ref('title')
+
+const msg = "Hello Word";
+const rawHtml = "Link";
+const dynamicId = "AAAA"
+
+const objectOfAttrs = {
+  id: 'container',
+  class: 'wrapper'
+}
+
+let a = 10
+let b = 5 
+let c = a+b
+
+const todoId = ref(1)
+const todoData = ref(null)
+
+async function fetchData() {
+  todoData.value = null
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+  )
+  todoData.value = await res.json()
+}
+
+fetchData()
+
+let data = [
+  { no: 1,nama: 'Budi',kelas: '12 RPL 1' },
+  { no: 2,nama: 'Dadang', kelas: '12 RPL 2' },
+  { no: 3,nama: 'Dudung',kelas: '12 RPL 3' },
+  { no: 4,nama: 'Abud',kelas: '12 RPL 2' },
+  { no: 5,nama: 'Jhon',kelas: '12 RPL 1' },
+]
+
+
+ 
+</script>
+
+<template>
+    <div>
+    <h1>{{msg}}</h1>
+    
+    <li><span style="color : red;" v-html= "rawHtml"></span></li>
+    
+    <h1>Attribute Bindings</h1>
+
+    <div v-bind:id="dynamicId"></div>
+
+    <button :disabled="isButtonDisabled">Button</button>
+
+    <div v-bind="objectOfAttrs"></div>
+
+    <a v-bind:href="url">12345</a>
+
+    <a v-on:[Rahman]="doSomething">contoh</a>
+
+    <form @submit.prevent="onSubmit">Modifiers</form>
+    bil 1 = {{a}} <br>
+    bil 2 = {{b}} <br>
+    bil 3 = {{c}} <br>
+
+
+    <p>Todo id: {{ todoId }}</p>
+    <button @click="todoId++">Fetch next todo</button>
+    <p v-if="!todoData">Loading...</p>
+    <pre v-else>{{ todoData }}</pre>
+    </div>
+
+    <ul>
+       <h3>Nama Siswa</h3>
+      <span>1 + {{ nama1 }}</span>
+    </ul>
+
+    <ul>{{ gridData }}</ul>
+
+    <table border="1">
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Kelas</th>
+      </tr>
+      <tr v-for= "Siswa in data">
+        <th>{{ Siswa.no}}</th>
+        <th>{{ Siswa.nama }}</th>
+        <th>{{ Siswa.kelas }}</th>
+      </tr>
+    </table>
+</template>
+
+<style>
+.title {
+  color: red;
+}
+</style>
